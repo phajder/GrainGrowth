@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.piotrek.ca2d.ui.MainFrame">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="638" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="da296" binding="cardPanel" layout-manager="CardLayout" hgap="0" vgap="0" show="c17fd">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="2a0be" binding="processPanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <card name="processCard"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="c17fd" binding="optionPanel" layout-manager="GridBagLayout">
+            <constraints>
+              <card name="optionCard"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="2e060" class="javax.swing.JComboBox" binding="neighTypeComboBox" custom-create="true">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="9" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag top="10" left="10" bottom="10" right="10" weightx="0.23" weighty="0.0"/>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="6fb5c" class="javax.swing.JComboBox" binding="boundaryComboBox" custom-create="true">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag top="10" left="10" bottom="10" right="10" weightx="0.23" weighty="0.0"/>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="a003e" class="javax.swing.JLabel" binding="neighTypeLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Neighbourhood"/>
+                </properties>
+              </component>
+              <component id="69889" class="javax.swing.JLabel" binding="boundaryLabel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Boundary type"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="2392f" binding="buttonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="c0e14" binding="actionButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints border-constraint="South"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="1ad07" class="javax.swing.JButton" binding="returnButton">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <text value="Return"/>
+                </properties>
+              </component>
+              <component id="50313" class="javax.swing.JButton" binding="drawRandomButton">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <text value="Draw random"/>
+                </properties>
+              </component>
+              <component id="260ac" class="javax.swing.JButton" binding="drawInclusionsButton">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <text value="Draw inclusions"/>
+                </properties>
+              </component>
+              <component id="3a670" class="javax.swing.JButton" binding="processButton">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <text value="Process"/>
+                </properties>
+              </component>
+              <component id="def9b" class="javax.swing.JButton" binding="substructureButton">
+                <constraints/>
+                <properties>
+                  <text value="Substructure"/>
+                </properties>
+              </component>
+              <component id="63530" class="javax.swing.JButton" binding="dualPhaseButton">
+                <constraints/>
+                <properties>
+                  <text value="Dualphase"/>
+                </properties>
+              </component>
+              <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
+                <constraints/>
+                <properties>
+                  <text value="Reset"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <component id="158c4" class="javax.swing.JButton" binding="createCaButton">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <text value="Create Cellular Automata"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
