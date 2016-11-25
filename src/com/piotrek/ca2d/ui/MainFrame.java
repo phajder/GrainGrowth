@@ -7,8 +7,6 @@ import com.piotrek.ca2d.type.NeighType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -70,7 +68,7 @@ public class MainFrame extends JFrame {
         processButton.addActionListener(e -> processButtonActionPerformed());
         drawRandomButton.addActionListener(e -> drawRandomButtonActionPerformed());
         drawInclusionsButton.addActionListener(e -> drawInclusionsButtonActionPerformed());
-        substructureButton.addActionListener(e -> generateNewStructure(grainList.size() - 2, 0));
+        substructureButton.addActionListener(e -> generateNewStructure(grainList.size(), 0));
         dualPhaseButton.addActionListener(e -> generateNewStructure(1, 1));
         processPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -128,6 +126,7 @@ public class MainFrame extends JFrame {
 
     private void resetCellularAutomata() {
         selectedGrainsPainted = false;
+        ca.setDefaultBoundaryValue();
         gridStatus.reset();
         grainList.clear();
         processPanel.repaint();

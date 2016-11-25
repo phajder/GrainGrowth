@@ -188,4 +188,8 @@ public abstract class Ca2d {
     public void setBoundaryValue(int boundaryValue) {
         this.boundaryValue = boundaryValue;
     }
+
+    public void setDefaultBoundaryValue() {
+        boundaryValue = INCLUSION_VALUE;
+    }
 }
