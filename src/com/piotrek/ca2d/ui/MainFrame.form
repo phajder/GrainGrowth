@@ -27,16 +27,16 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="2e060" class="javax.swing.JComboBox" binding="neighTypeComboBox" custom-create="true">
+              <component id="2e060" class="javax.swing.JComboBox" binding="caNeighbourhoodCombobox" custom-create="true">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="9" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag top="10" left="10" bottom="10" right="10" weightx="0.23" weighty="0.0"/>
                 </constraints>
                 <properties/>
               </component>
-              <component id="6fb5c" class="javax.swing.JComboBox" binding="boundaryComboBox" custom-create="true">
+              <component id="6fb5c" class="javax.swing.JComboBox" binding="boundaryCombobox" custom-create="true">
                 <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag top="10" left="10" bottom="10" right="10" weightx="0.23" weighty="0.0"/>
                 </constraints>
                 <properties/>
@@ -47,16 +47,32 @@
                   <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
-                  <text value="Neighbourhood"/>
+                  <text value="Ca Neighbourhood"/>
                 </properties>
               </component>
               <component id="69889" class="javax.swing.JLabel" binding="boundaryLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Boundary type"/>
+                </properties>
+              </component>
+              <component id="5f8ed" class="javax.swing.JComboBox" binding="mcNeighbourhoodCombobox" custom-create="true">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="bc47" class="javax.swing.JLabel" binding="mcNeighbourhoodLabel">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag top="10" left="10" bottom="10" right="10" weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
-                  <text value="Boundary type"/>
+                  <text value="Mc Neighbourhood"/>
                 </properties>
               </component>
             </children>
@@ -121,13 +137,32 @@
               </component>
             </children>
           </grid>
-          <component id="158c4" class="javax.swing.JButton" binding="createCaButton">
+          <grid id="eecf9" binding="createButtonPanel" layout-manager="GridBagLayout">
             <constraints border-constraint="Center"/>
-            <properties>
-              <horizontalAlignment value="0"/>
-              <text value="Create Cellular Automata"/>
-            </properties>
-          </component>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="4edb4" class="javax.swing.JButton" binding="createMcButton">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="5" bottom="0" right="5" weightx="0.23" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Create Monte Carlo"/>
+                </properties>
+              </component>
+              <component id="158c4" class="javax.swing.JButton" binding="createCaButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="5" bottom="0" right="5" weightx="0.23" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <text value="Create Cellular Automata"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>

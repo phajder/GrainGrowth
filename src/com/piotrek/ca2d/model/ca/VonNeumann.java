@@ -1,10 +1,9 @@
-package com.piotrek.ca2d.model;
-
-import java.awt.*;
-import java.util.List;
+package com.piotrek.ca2d.model.ca;
 
 /**
- * Created by pioot on 18.10.2016.
+ * Von Neumann neighbourhood for cellular automata method.
+ * Created by Piotrek on 18.10.2016.
+ * @author Piotrek
  */
 class VonNeumann extends Ca2d {
     private static final int[][] neighClose = {
@@ -18,13 +17,13 @@ class VonNeumann extends Ca2d {
             {1,0,1}
     };
 
-    VonNeumann(Dimension size, boolean periodical, Integer[][] states) {
-        super(size, periodical, states);
+    VonNeumann(boolean periodical, Integer[][] states) {
+        super(periodical, states);
     }
 
     @Override
-    protected List<Integer> getNeighbours(Point current) {
-        return getNeighbours(neighClose, current);
+    protected Integer[][] getNeighbours(int x, int y) {
+        return getNeighbours(x, y, neighClose);
     }
 
     static int[][] geVonNeumannClose() {

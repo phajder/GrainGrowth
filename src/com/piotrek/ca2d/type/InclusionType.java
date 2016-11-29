@@ -1,7 +1,9 @@
 package com.piotrek.ca2d.type;
 
 /**
- * Created by pioot on 19.10.2016.
+ * Enum with inclusion types used on UI purpose.
+ * Created by Piotrek on 19.10.2016.
+ * @author Piotrek
  */
 public enum InclusionType {
     SQUARE("Square"), CIRCULAR("Circular");

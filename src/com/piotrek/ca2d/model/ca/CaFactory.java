@@ -1,31 +1,33 @@
-package com.piotrek.ca2d.model;
+package com.piotrek.ca2d.model.ca;
 
-import com.piotrek.ca2d.type.NeighType;
+import com.piotrek.ca2d.type.CaNeighbourhood;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by pioot on 18.10.2016.
+ * Factory used for creating ca2d object.
+ * Created by Piotrek on 18.10.2016.
+ * @author Piotrek
  */
 public class CaFactory {
-    public static Ca2d getCa2dInstance(Dimension size, boolean periodic, Integer[][] states, NeighType type) {
+    public static Ca2d getCa2dInstance(boolean periodic, Integer[][] states, CaNeighbourhood type) {
         Ca2d ca;
         switch(type) {
             case VON_NEUMANN:
-                ca = new VonNeumann(size, periodic, states);
+                ca = new VonNeumann(periodic, states);
                 break;
             case MOORE:
-                ca = new Moore(size, periodic, states);
+                ca = new Moore(periodic, states);
                 break;
             case HEXAGONAL_RANDOM:
-                ca = new HexagonalRandom(size, periodic, states);
+                ca = new HexagonalRandom(periodic, states);
                 break;
             case PENTAGONAL_RANDOM:
-                ca = new PentagonalRandom(size, periodic, states);
+                ca = new PentagonalRandom(periodic, states);
                 break;
             case SHAPE_CONTROL:
-                ca = createShapeControl(size, periodic, states);
+                ca = createShapeControl(periodic, states);
                 break;
             default:
                 ca = null;
@@ -33,7 +35,7 @@ public class CaFactory {
         return ca;
     }
 
-    private static final Ca2d createShapeControl(Dimension size, boolean periodic, Integer[][] states) {
+    private static Ca2d createShapeControl(boolean periodic, Integer[][] states) {
         String txt = JOptionPane.showInputDialog(null,
                 "Probability value:",
                 "Question",
@@ -41,7 +43,7 @@ public class CaFactory {
         try {
             int val = Integer.valueOf(txt);
             if(val > 0 && val < 101) {
-                return new ShapeControl(size, periodic, states, Integer.valueOf(val));
+                return new ShapeControl(periodic, states, val);
             } else {
                 JOptionPane.showMessageDialog(
                         null,
@@ -57,6 +59,6 @@ public class CaFactory {
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        return new ShapeControl(size, periodic, states);
+        return new ShapeControl(periodic, states);
     }
 }

@@ -1,9 +1,11 @@
-package com.piotrek.ca2d.model;
+package com.piotrek.ca2d.model.ca;
 
 import java.util.*;
 
 /**
- * Created by pioot on 25.10.2016.
+ * Shape control rules implementation.
+ * Created by Piotrek on 25.10.2016.
+ * @author Piotrek
  */
 class RulesImpl {
     static final int DEFAULT_PROBABILITY = 10;

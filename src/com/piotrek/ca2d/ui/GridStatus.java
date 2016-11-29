@@ -5,7 +5,9 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Created by pioot on 18.10.2016.
+ * Used for grid panel implementation, containing important data for rendering.
+ * Created by Piotrek on 18.10.2016.
+ * @author Piotrek
  */
 class GridStatus {
     private final Dimension dim;
@@ -67,7 +69,7 @@ class GridStatus {
         proceeded = false;
     }
 
-    void resetColors() {
+    private void resetColors() {
         removeAllColors();
         generateColors();
     }
@@ -124,11 +126,11 @@ class GridStatus {
         return colorList;
     }
 
-    public void proceed() {
+    void proceed() {
         proceeded = true;
     }
 
-    public boolean isProceeded() {
+    boolean isProceeded() {
         return proceeded;
     }
 }

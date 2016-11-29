@@ -1,11 +1,12 @@
-package com.piotrek.ca2d.model;
+package com.piotrek.ca2d.model.ca;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 /**
- * Created by pioot on 18.10.2016.
+ * Hexagonal random neighbourhood for cellular automata.
+ * Created by Piotrek on 18.10.2016.
+ * @author Piotrek
  */
 class HexagonalRandom extends Ca2d {
     private static List<int[][]> neighCases = init();
@@ -27,15 +28,15 @@ class HexagonalRandom extends Ca2d {
         return list;
     }
 
-    HexagonalRandom(Dimension size, boolean periodic, Integer[][] states) {
-        super(size, periodic, states);
+    HexagonalRandom(boolean periodic, Integer[][] states) {
+        super(periodic, states);
     }
 
     @Override
-    protected List<Integer> getNeighbours(Point current) {
+    protected Integer[][] getNeighbours(int x, int y) {
         Random random = new Random();
         int val = random.nextInt(2);
 
-        return getNeighbours(neighCases.get(val), current);
+        return getNeighbours(x, y, neighCases.get(val));
     }
 }

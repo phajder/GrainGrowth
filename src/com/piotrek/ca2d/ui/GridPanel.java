@@ -6,7 +6,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
- * Created by pioot on 18.10.2016.
+ * Grid panel implementation.
+ * Created by Piotrek on 18.10.2016.
+ * @author Piotrek
  */
 class GridPanel extends JPanel {
     private final GridStatus gridStatus;

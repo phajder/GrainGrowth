@@ -2,6 +2,10 @@ package com.piotrek.ca2d;
 
 import com.piotrek.ca2d.ui.MainFrame;
 
+/**
+ * Main class.
+ * @author Piotrek
+ */
 public class Main {
 
     public static void main(String[] args) {
