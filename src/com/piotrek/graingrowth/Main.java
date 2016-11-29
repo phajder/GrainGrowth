@@ -1,6 +1,6 @@
-package com.piotrek.ca2d;
+package com.piotrek.graingrowth;
 
-import com.piotrek.ca2d.ui.MainFrame;
+import com.piotrek.graingrowth.ui.MainFrame;
 
 /**
  * Main class.

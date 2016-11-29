@@ -1,4 +1,4 @@
-package com.piotrek.ca2d.ui;
+package com.piotrek.graingrowth.ui;
 
 import java.awt.*;
 import java.util.*;
@@ -30,7 +30,7 @@ class GridStatus {
         for(Integer[] tab: states) {
             set.addAll(Arrays.asList(tab));
         }
-        return set.stream().max(Comparator.naturalOrder()).get();
+        return set.stream().max(Comparator.naturalOrder()).orElse(null);
     }
 
     private void addColor() {
@@ -80,7 +80,7 @@ class GridStatus {
             for(int j=0; j<dim.width; j++) {
                 counter = 0;
                 for(int v=0; v<values.size(); v++) {
-                    if(states[i][j] == values.get(v)) {
+                    if(Objects.equals(states[i][j], values.get(v))) {
                         states[i][j] = v + 1;
                         break;
                     }

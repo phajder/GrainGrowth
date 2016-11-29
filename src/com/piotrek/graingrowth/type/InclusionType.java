@@ -1,4 +1,4 @@
-package com.piotrek.ca2d.type;
+package com.piotrek.graingrowth.type;
 
 /**
  * Enum with inclusion types used on UI purpose.

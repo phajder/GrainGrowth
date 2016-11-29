@@ -1,6 +1,6 @@
-package com.piotrek.ca2d.model.mc;
+package com.piotrek.graingrowth.model.mc;
 
-import com.piotrek.ca2d.type.McNeighbourhood;
+import com.piotrek.graingrowth.type.McNeighbourhood;
 
 /**
  * Util used for creating Mc2d objects.

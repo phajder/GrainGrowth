@@ -1,4 +1,4 @@
-package com.piotrek.ca2d.model.ca;
+package com.piotrek.graingrowth.model.ca;
 
 /**
  * Von Neumann neighbourhood for cellular automata method.

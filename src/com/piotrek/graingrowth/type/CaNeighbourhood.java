@@ -1,4 +1,4 @@
-package com.piotrek.ca2d.type;
+package com.piotrek.graingrowth.type;
 
 /**
  * Enum containing all cellular automata neighbourhoods used on UI purpose.

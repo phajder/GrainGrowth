@@ -1,7 +1,7 @@
-package com.piotrek.ca2d.model.ca;
+package com.piotrek.graingrowth.model.ca;
 
-import com.piotrek.ca2d.model.GrainStructure;
-import com.piotrek.ca2d.type.InclusionType;
+import com.piotrek.graingrowth.model.GrainStructure;
+import com.piotrek.graingrowth.type.InclusionType;
 
 import java.awt.*;
 import java.util.*;
@@ -52,11 +52,11 @@ public abstract class Ca2d extends GrainStructure {
         List<Point> result = new ArrayList<>();
         for(int i=-1; i<2; i+=2) {
             if(x+i >= 0 && x+i < newStates[0].length) {
-                if(newStates[x][y] != newStates[x+i][y])
+                if(!Objects.equals(newStates[x][y], newStates[x + i][y]))
                     result.add(new Point(x+i, y));
             }
             if(y+i >= 0 && y+i < newStates[0].length) {
-                if(newStates[x][y] != newStates[x][y+i])
+                if(!Objects.equals(newStates[x][y], newStates[x][y + i]))
                     result.add(new Point(x, y+i));
             }
         }
@@ -117,7 +117,7 @@ public abstract class Ca2d extends GrainStructure {
         for(Integer[] tab: newStates) {
             set.addAll(Arrays.asList(tab));
         }
-        int max = set.stream().max(Comparator.naturalOrder()).get();
+        int max = set.stream().max(Comparator.naturalOrder()).orElse(null);
         Random random = new Random();
         int x, y;
         for(int i=1; i<=numOfGrains; i++) {
@@ -147,7 +147,7 @@ public abstract class Ca2d extends GrainStructure {
     public final boolean isNotEnd() {
         for(int i=0; i<newStates.length; i++) {
             for(int j=0; j<newStates[0].length; j++) {
-                if(newStates[i][j] != states[i][j])
+                if(!Objects.equals(newStates[i][j], states[i][j]))
                     return true;
             }
         }

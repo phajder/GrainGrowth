@@ -1,4 +1,4 @@
-package com.piotrek.ca2d.ui;
+package com.piotrek.graingrowth.ui;
 
 import javax.swing.*;
 import java.awt.*;

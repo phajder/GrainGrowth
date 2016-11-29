@@ -1,4 +1,4 @@
-package com.piotrek.ca2d.model;
+package com.piotrek.graingrowth.model;
 
 /**
  * Basic model for grain growth algorithms.
@@ -8,7 +8,7 @@ package com.piotrek.ca2d.model;
 public abstract class GrainStructure {
     protected static final int INCLUSION_VALUE = -1;
 
-    private int boundaryValue;
+    protected int boundaryValue;
     protected boolean periodical;
 
     protected Integer[][] states;

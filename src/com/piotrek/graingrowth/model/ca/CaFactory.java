@@ -1,12 +1,11 @@
-package com.piotrek.ca2d.model.ca;
+package com.piotrek.graingrowth.model.ca;
 
-import com.piotrek.ca2d.type.CaNeighbourhood;
+import com.piotrek.graingrowth.type.CaNeighbourhood;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
- * Factory used for creating ca2d object.
+ * Factory used for creating graingrowth object.
  * Created by Piotrek on 18.10.2016.
  * @author Piotrek
  */

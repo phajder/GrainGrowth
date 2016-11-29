@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.piotrek.ca2d.ui.MainFrame">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.piotrek.graingrowth.ui.MainFrame">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="20" y="20" width="638" height="400"/>
@@ -132,7 +132,7 @@
               <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
                 <constraints/>
                 <properties>
-                  <text value="Reset"/>
+                  <text value="Reset" noi18n="true"/>
                 </properties>
               </component>
             </children>
