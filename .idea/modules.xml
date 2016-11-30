@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Ca2d.iml" filepath="$PROJECT_DIR$/Ca2d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GrainGrowth.iml" filepath="$PROJECT_DIR$/GrainGrowth.iml" />
     </modules>
   </component>
 </project>
