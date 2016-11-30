@@ -5,15 +5,15 @@ package com.piotrek.graingrowth.model.mc;
  * Created by Piotrek on 29.11.2016.
  * @author Piotrek
  */
-public class Moore extends Mc2d {
+class Moore extends Mc2d {
     private static final int[][] NEIGHBOURHOOD = {
             {1, 1, 1},
             {1, 1, 1},
             {1, 1, 1}
     };
 
-    protected Moore(Integer[][] states, boolean periodical) {
-        super(states, periodical);
+    protected Moore(boolean periodical, Integer[][] states) {
+        super(periodical, states);
     }
 
     @Override

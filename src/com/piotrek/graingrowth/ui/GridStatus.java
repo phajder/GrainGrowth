@@ -11,7 +11,7 @@ import java.util.List;
  */
 class GridStatus {
     private final Dimension dim;
-    private Integer[][] states;
+    private final Integer[][] states;
     private ArrayList<Color> colorList;
     private boolean proceeded;
 

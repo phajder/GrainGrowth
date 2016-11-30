@@ -5,7 +5,7 @@ package com.piotrek.graingrowth.model.mc;
  * Created by Piotrek on 29.11.2016.
  * @author Piotrek
  */
-public class VonNeumann extends Mc2d {
+class VonNeumann extends Mc2d {
     private static final int[][] NEIGHBOURHOOD = {
             {0, 1, 0},
             {1, 1, 1},
@@ -14,8 +14,8 @@ public class VonNeumann extends Mc2d {
 
     private final double kbt;
 
-    VonNeumann(Integer[][] states, boolean periodical) {
-        super(states, periodical);
+    VonNeumann(boolean periodical, Integer[][] states) {
+        super(periodical, states);
         //kbt = 0.9 * Math.random() + 0.1;
         kbt = 0.6;
     }

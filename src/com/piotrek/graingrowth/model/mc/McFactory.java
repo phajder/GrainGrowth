@@ -8,14 +8,14 @@ import com.piotrek.graingrowth.type.McNeighbourhood;
  * @author Piotrek
  */
 public class McFactory {
-    public static Mc2d getMc2dInstance(Integer[][] states, boolean periodical, McNeighbourhood neighbourhood) {
+    public static Mc2d getMc2dInstance(boolean periodical, Integer[][] states, McNeighbourhood neighbourhood) {
         Mc2d mc2d;
         switch(neighbourhood) {
             case VON_NEUMANN:
-                mc2d = new VonNeumann(states, periodical);
+                mc2d = new VonNeumann(periodical, states);
                 break;
             case MOORE:
-                mc2d = new Moore(states, periodical);
+                mc2d = new Moore(periodical, states);
                 break;
             default:
                 mc2d = null;

@@ -1,13 +1,13 @@
 package com.piotrek.graingrowth.ui;
 
 import com.piotrek.graingrowth.model.GrainStructure;
-import com.piotrek.graingrowth.model.ca.Ca2d;
 import com.piotrek.graingrowth.model.ca.CaFactory;
 import com.piotrek.graingrowth.model.mc.Mc2d;
 import com.piotrek.graingrowth.model.mc.McFactory;
 import com.piotrek.graingrowth.type.InclusionType;
 import com.piotrek.graingrowth.type.CaNeighbourhood;
 import com.piotrek.graingrowth.type.McNeighbourhood;
+import com.piotrek.graingrowth.type.MethodType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,11 +23,8 @@ import java.util.List;
  */
 public class MainFrame extends JFrame {
     private static final int DEFAULT_SIZE = 250;
-    private static final int DEFAULT_GRAINS = 50;
     private GridStatus gridStatus;
     private GrainStructure structure;
-    private Ca2d ca;
-    private Mc2d mc;
     private Dimension caSize;
     private List<Integer> grainList;
     private boolean selectedGrainsPainted;
@@ -36,11 +33,9 @@ public class MainFrame extends JFrame {
     private JPanel mainPanel;
     private JPanel optionPanel;
     private JPanel processPanel;
-    private JComboBox<CaNeighbourhood> caNeighbourhoodCombobox;
-    private JComboBox<Object> boundaryCombobox;
+    private JComboBox<CaNeighbourhood> caNeighbourhoodComboBox;
+    private JComboBox<Object> boundaryComboBox;
     private JButton createCaButton;
-    private JLabel neighTypeLabel;
-    private JLabel boundaryLabel;
     private JPanel cardPanel;
     private JPanel buttonPanel;
     private JButton returnButton;
@@ -51,10 +46,10 @@ public class MainFrame extends JFrame {
     private JButton substructureButton;
     private JButton dualPhaseButton;
     private JButton resetButton;
-    private JComboBox mcNeighbourhoodCombobox;
-    private JLabel mcNeighbourhoodLabel;
+    private JComboBox mcNeighbourhoodComboBox;
     private JButton createMcButton;
     private JPanel createButtonPanel;
+    private JSpinner maxIterSpinner;
     //=====END OF GUI ELEMENTS=====//
 
     private class ProcessWorker extends SwingWorker {
@@ -85,6 +80,7 @@ public class MainFrame extends JFrame {
         substructureButton.addActionListener(e -> generateNewStructure(grainList.size(), 0));
         dualPhaseButton.addActionListener(e -> generateNewStructure(1, 1));
         resetButton.addActionListener(e -> resetGrainGrowth());
+
         processPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -99,6 +95,7 @@ public class MainFrame extends JFrame {
                 else processPanelBeforeGrowthMouseClicked(cellX, cellY);
             }
         });
+
         grainList = new ArrayList<>();
         actionButtonPanel.setVisible(false);
         selectedGrainsPainted = false;
@@ -131,21 +128,15 @@ public class MainFrame extends JFrame {
         }
         gridStatus = new GridStatus(caSize);
         processPanel = new GridPanel(gridStatus);
-        caNeighbourhoodCombobox = new JComboBox<>(CaNeighbourhood.values());
-        mcNeighbourhoodCombobox = new JComboBox<>(McNeighbourhood.values());
-        boundaryCombobox = new JComboBox<>(new Object[] {
+        caNeighbourhoodComboBox = new JComboBox<>(CaNeighbourhood.values());
+        mcNeighbourhoodComboBox = new JComboBox<>(McNeighbourhood.values());
+        boundaryComboBox = new JComboBox<>(new Object[] {
            "Non-periodic", "Periodic"
         });
     }
 
     private void resetGrainGrowth() {
         selectedGrainsPainted = false;
-        if(structure != null) {
-            structure.setDefaultBoundaryValue();
-            if(structure.getClass().getSuperclass().equals(Mc2d.class)) {
-                ((Mc2d) structure).resetIterations();
-            }
-        }
         gridStatus.reset();
         grainList.clear();
         processPanel.repaint();
@@ -154,14 +145,31 @@ public class MainFrame extends JFrame {
     private void generateNewStructure(int boundaryVal, int type) {
         if(gridStatus.isProceeded()) {
             if(selectedGrainsPainted) {
-                if(structure.getClass().getSuperclass().equals(Mc2d.class)) {
-                    ((Mc2d) structure).resetIterations();
-                }
-                structure.setBoundaryValue(boundaryVal);
                 processButtonActionPerformed();
             } else {
+                MethodType method = (MethodType) JOptionPane.showInputDialog(
+                        this,
+                        "Select grain growth method:",
+                        "Method selection",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        MethodType.values(),
+                        null);
+                if(method.equals(MethodType.CA)) {
+                    structure = CaFactory.getCa2dInstance(boundaryComboBox.getSelectedIndex() == 1,
+                            gridStatus.getStates(),
+                            (CaNeighbourhood) caNeighbourhoodComboBox.getSelectedItem());
+                } else {
+                    structure = McFactory.getMc2dInstance(boundaryComboBox.getSelectedIndex() == 1,
+                            gridStatus.getStates(),
+                            (McNeighbourhood) mcNeighbourhoodComboBox.getSelectedItem());
+                    ((Mc2d) structure).setMaxIterations((int) maxIterSpinner.getValue());
+                }
+
                 if(type == 0) gridStatus.createSubstructure(grainList);
                 else gridStatus.createDualPhase(grainList);
+
+                structure.setBoundaryValue(boundaryVal);
                 processPanel.repaint();
                 selectedGrainsPainted = true;
             }
@@ -174,9 +182,9 @@ public class MainFrame extends JFrame {
 
     private void createCaButtonActionPerformed() {
         structure = CaFactory.getCa2dInstance(
-                boundaryCombobox.getSelectedIndex() == 1,
+                boundaryComboBox.getSelectedIndex() == 1,
                 gridStatus.getStates(),
-                (CaNeighbourhood) caNeighbourhoodCombobox.getSelectedItem());
+                (CaNeighbourhood) caNeighbourhoodComboBox.getSelectedItem());
 
         CardLayout cl = (CardLayout) cardPanel.getLayout();
         cl.show(cardPanel, "processCard");
@@ -186,9 +194,10 @@ public class MainFrame extends JFrame {
     }
 
     private void createMcButtonActionPerformed() {
-        structure = McFactory.getMc2dInstance(gridStatus.getStates(),
-                boundaryCombobox.getSelectedIndex() == 1,
-                (McNeighbourhood) mcNeighbourhoodCombobox.getSelectedItem());
+        structure = McFactory.getMc2dInstance(boundaryComboBox.getSelectedIndex() == 1,
+                gridStatus.getStates(),
+                (McNeighbourhood) mcNeighbourhoodComboBox.getSelectedItem());
+        ((Mc2d) structure).setMaxIterations((int) maxIterSpinner.getValue());
         CardLayout cl = (CardLayout) cardPanel.getLayout();
         cl.show(cardPanel, "processCard");
 
@@ -239,9 +248,9 @@ public class MainFrame extends JFrame {
         try {
             int radius = Integer.valueOf(JOptionPane.showInputDialog(this, "Inclusion radius:", "Inclusions", JOptionPane.QUESTION_MESSAGE));
             if(gridStatus.isProceeded())
-                ((Ca2d)structure).drawInclusionsAfter(type, radius);
+                structure.drawInclusionsAfter(type, radius);
             else
-                ((Ca2d)structure).drawInclusionBefore(type, radius);
+                structure.drawInclusionBefore(type, radius);
             processPanel.repaint();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Input value is not a number.", "Error", JOptionPane.ERROR_MESSAGE);
