@@ -1,4 +1,4 @@
-#CELLULAR AUTOMATA
+#GRAIN GROWTH
 <p>Simple grain growth algorithms implementation using Java and its representation with Swing graphics library.
 Implemented neighbourhoods for Cellular Automata:
 <li>Hexagonal random,</li>
