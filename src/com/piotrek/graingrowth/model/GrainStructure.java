@@ -36,7 +36,7 @@ public abstract class GrainStructure {
     public abstract void drawGrains(int numOfGrains);
     public abstract boolean isNotEnd();
 
-    private void drawInclusions(InclusionType type, int radius, int x, int y) {
+    protected void drawInclusions(InclusionType type, int radius, int x, int y) {
         int value = type.equals(InclusionType.SQUARE) ?
                 (int) (Math.round(Math.pow(2.0, -2.0) * radius)) : radius;
         for(int i=-value; i<value; i++) {
@@ -52,7 +52,7 @@ public abstract class GrainStructure {
     private List<Point> checkNeighbours(int x, int y) {
         List<Point> result = new ArrayList<>();
         for(int i=-1; i<2; i+=2) {
-            if(x+i >= 0 && x+i < states[0].length) {
+            if(x+i >= 0 && x+i < states.length) {
                 if(!Objects.equals(states[x][y], states[x + i][y]))
                     result.add(new Point(x+i, y));
             }

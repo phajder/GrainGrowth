@@ -1,6 +1,8 @@
 package com.piotrek.graingrowth.model.ca;
 
 import com.piotrek.graingrowth.model.GrainStructure;
+import com.piotrek.graingrowth.type.InclusionType;
+
 import java.util.*;
 import java.util.List;
 
@@ -19,6 +21,11 @@ public abstract class Ca2d extends GrainStructure {
         this.periodical = periodical;
         this.newStates = newStates;
         this.states = new Integer[newStates.length][newStates[0].length];
+        for(Integer[] tab: states) {
+            for(int i=0; i<tab.length; i++) {
+                tab[i] = 0;
+            }
+        }
     }
 
     @Override
@@ -78,5 +85,13 @@ public abstract class Ca2d extends GrainStructure {
         }
         setDefaultBoundaryValue();
         return false;
+    }
+
+    @Override
+    protected void drawInclusions(InclusionType type, int radius, int x, int y) {
+        super.drawInclusions(type, radius, x, y);
+        for(int i=0; i<states.length; i++) {
+            arraycopy(states[i], 0, newStates[i], 0, states[i].length);
+        }
     }
 }
