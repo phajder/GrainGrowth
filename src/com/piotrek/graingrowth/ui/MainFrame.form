@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.piotrek.graingrowth.ui.MainFrame">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="660" height="400"/>
+      <xy x="20" y="20" width="970" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -100,73 +100,133 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="c0e14" binding="actionButtonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="c0e14" binding="actionButtonPanel" layout-manager="GridBagLayout">
             <constraints border-constraint="South"/>
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="cb3dc" binding="dmrButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-                <constraints border-constraint="North"/>
+              <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag top="5" left="5" bottom="5" right="5" weightx="0.23" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Reset" noi18n="true"/>
+                </properties>
+              </component>
+              <component id="1ad07" class="javax.swing.JButton" binding="returnButton">
+                <constraints>
+                  <grid row="0" column="3" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag top="5" left="5" bottom="5" right="5" weightx="0.23" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <text value="Return"/>
+                </properties>
+              </component>
+              <grid id="d10e9" binding="recrystalizationButtonPanel" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="1ad07" class="javax.swing.JButton" binding="returnButton">
-                    <constraints/>
+                  <component id="d4a80" class="javax.swing.JButton" binding="showEnergyButton">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="2" left="5" bottom="5" right="5" weightx="0.0" weighty="0.0"/>
+                    </constraints>
                     <properties>
-                      <enabled value="true"/>
-                      <text value="Return"/>
+                      <text value="Energy distribution"/>
                     </properties>
                   </component>
+                  <component id="2ed96" class="javax.swing.JComboBox" binding="energyComboBox" custom-create="true">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="2" left="5" bottom="5" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="10378" class="javax.swing.JComboBox" binding="nucleationPlacementComboBox" custom-create="true">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="2" left="5" bottom="5" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="88c93" class="javax.swing.JComboBox" binding="nucleationTypeComboBox" custom-create="true">
+                    <constraints>
+                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="2" left="5" bottom="5" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="a415d" class="javax.swing.JButton" binding="recrystallizationButton">
+                    <constraints>
+                      <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag top="2" left="5" bottom="5" right="5" weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <text value="Recrystallize"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="cb3dc" binding="dmrButtonPanel" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
                   <component id="50313" class="javax.swing.JButton" binding="drawRandomButton">
-                    <constraints/>
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="5" left="5" bottom="3" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
                     <properties>
                       <enabled value="true"/>
                       <text value="Draw random"/>
                     </properties>
                   </component>
                   <component id="260ac" class="javax.swing.JButton" binding="drawInclusionsButton">
-                    <constraints/>
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="5" left="5" bottom="3" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
                     <properties>
                       <enabled value="true"/>
                       <text value="Draw inclusions"/>
                     </properties>
                   </component>
                   <component id="3a670" class="javax.swing.JButton" binding="processButton">
-                    <constraints/>
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="5" left="5" bottom="3" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
                     <properties>
                       <enabled value="true"/>
                       <text value="Process"/>
                     </properties>
                   </component>
                   <component id="def9b" class="javax.swing.JButton" binding="substructureButton">
-                    <constraints/>
+                    <constraints>
+                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="5" left="5" bottom="3" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
                     <properties>
                       <text value="Substructure"/>
                     </properties>
                   </component>
                   <component id="63530" class="javax.swing.JButton" binding="dualPhaseButton">
-                    <constraints/>
+                    <constraints>
+                      <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag top="5" left="5" bottom="3" right="5" weightx="0.23" weighty="0.0"/>
+                    </constraints>
                     <properties>
                       <text value="Dualphase"/>
-                    </properties>
-                  </component>
-                  <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
-                    <constraints/>
-                    <properties>
-                      <text value="Reset" noi18n="true"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <grid id="d10e9" binding="recrystalizationButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-                <constraints border-constraint="South"/>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="d4a80" class="javax.swing.JButton" binding="showEnergyButton">
-                    <constraints/>
-                    <properties>
-                      <text value="Energy distribution"/>
                     </properties>
                   </component>
                 </children>

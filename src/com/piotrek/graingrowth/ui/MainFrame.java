@@ -1,20 +1,15 @@
 package com.piotrek.graingrowth.ui;
 
 import com.piotrek.graingrowth.model.GrainStructure;
+import com.piotrek.graingrowth.model.RecrystallizationParams;
 import com.piotrek.graingrowth.model.ca.CaFactory;
 import com.piotrek.graingrowth.model.mc.Mc2d;
 import com.piotrek.graingrowth.model.mc.McFactory;
-import com.piotrek.graingrowth.type.InclusionType;
-import com.piotrek.graingrowth.type.CaNeighbourhood;
-import com.piotrek.graingrowth.type.McNeighbourhood;
-import com.piotrek.graingrowth.type.MethodType;
+import com.piotrek.graingrowth.type.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +22,7 @@ public class MainFrame extends JFrame {
     private static final int DEFAULT_SIZE = 250;
     private GridStatus gridStatus;
     private GrainStructure structure;
+    private RecrystallizationParams params;
     private Dimension caSize;
     private List<Integer> grainList;
     private boolean selectedGrainsPainted;
@@ -55,6 +51,10 @@ public class MainFrame extends JFrame {
     private JPanel dmrButtonPanel;
     private JPanel recrystalizationButtonPanel;
     private JButton showEnergyButton;
+    private JComboBox energyComboBox;
+    private JComboBox nucleationPlacementComboBox;
+    private JComboBox nucleationTypeComboBox;
+    private JButton recrystallizationButton;
     //=====END OF GUI ELEMENTS=====//
 
     private class ProcessWorker extends SwingWorker {
@@ -74,8 +74,8 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(800, 600));
-        optionPanel.setMinimumSize(new Dimension(800, 600));
+        setMinimumSize(new Dimension(1024, 600));
+        optionPanel.setMinimumSize(new Dimension(1024, 600));
         createCaButton.addActionListener(e -> createCaButtonActionPerformed());
         createMcButton.addActionListener(e -> createMcButtonActionPerformed());
         returnButton.addActionListener(e -> returnButtonActionPerformed());
@@ -87,6 +87,16 @@ public class MainFrame extends JFrame {
         resetButton.addActionListener(e -> resetGrainGrowth());
 
         showEnergyButton.addActionListener(e -> showEnergyButtonActionPerformed());
+        recrystallizationButton.addActionListener(e -> recrystallizationButtonActionPerformed());
+        energyComboBox.addItemListener(e -> {
+            params.setEnergyOnBoundaries(energyComboBox.getSelectedIndex() == 1);
+        });
+        nucleationPlacementComboBox.addItemListener(e -> {
+            params.setNucleationOnBoundaries(nucleationPlacementComboBox.getSelectedIndex() == 1);
+        });
+        nucleationTypeComboBox.addItemListener(e -> {
+            params.setNucleationType((NucleationType) nucleationTypeComboBox.getSelectedItem());
+        });
 
         processPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -106,6 +116,7 @@ public class MainFrame extends JFrame {
         grainList = new ArrayList<>();
         actionButtonPanel.setVisible(false);
         selectedGrainsPainted = false;
+        params = new RecrystallizationParams();
         add(mainPanel);
     }
 
@@ -137,6 +148,9 @@ public class MainFrame extends JFrame {
         processPanel = new GridPanel(gridStatus);
         caNeighbourhoodComboBox = new JComboBox<>(CaNeighbourhood.values());
         mcNeighbourhoodComboBox = new JComboBox<>(McNeighbourhood.values());
+        energyComboBox = new JComboBox<>(new Object[] { "Homogeneous", "On grain boundaries" });
+        nucleationPlacementComboBox = new JComboBox<>(new Object[] { "Anywhere", "On grain boundaries" });
+        nucleationTypeComboBox = new JComboBox<>(NucleationType.values());
         boundaryComboBox = new JComboBox<>(new Object[] {
            "Non-periodic", "Periodic"
         });
@@ -265,9 +279,22 @@ public class MainFrame extends JFrame {
     }
 
     private void showEnergyButtonActionPerformed() {
-        structure.distributeOnGrainBoundaries();
+        if(energyComboBox.getSelectedIndex() == 0) {
+            structure.distributeHomogeneous();
+        } else {
+            structure.distributeOnGrainBoundaries();
+        }
         EnergyVisualisation visualisation = new EnergyVisualisation(structure.getStoredEnergyH());
         visualisation.setVisible(true);
         visualisation.visualiseEnergy();
+    }
+
+    private void recrystallizationButtonActionPerformed() {
+        /*RecrystallizationParams params = new RecrystallizationParams(
+                energyComboBox.getSelectedIndex() == 1,
+                nucleationPlacementComboBox.getSelectedIndex() == 1,
+                (NucleationType) nucleationTypeComboBox.getSelectedItem()
+        );*/
+        structure.recrystallize(params);
     }
 }

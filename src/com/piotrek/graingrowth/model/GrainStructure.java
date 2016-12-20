@@ -52,11 +52,11 @@ public abstract class GrainStructure {
     }
 
     private void initializeEnergy() {
-        storedEnergyH = new Integer[states.length][states[0].length];
-        for(int i=0; i<storedEnergyH.length; i++) {
-            for(Integer[] tab: storedEnergyH) {
-                Arrays.fill(tab, 0);
-            }
+        if(storedEnergyH == null) {
+            storedEnergyH = new Integer[states.length][states[0].length];
+        }
+        for(Integer[] tab: storedEnergyH) {
+            Arrays.fill(tab, 0);
         }
     }
 
@@ -142,7 +142,7 @@ public abstract class GrainStructure {
      * Distributes energy in material homogeneously.
      */
     public final void distributeHomogeneous() {
-        if(storedEnergyH == null) initializeEnergy();
+        initializeEnergy();
         for(int i=0; i<storedEnergyH.length; i++) {
             for(int j=0; j<storedEnergyH[i].length; j++) {
                 storedEnergyH[i][j] = DEFAULT_ENERGY;
@@ -154,11 +154,15 @@ public abstract class GrainStructure {
      * Distributes energy in material only on grain boundaries.
      */
     public final void distributeOnGrainBoundaries() {
-        if(storedEnergyH == null) initializeEnergy();
+        initializeEnergy();
         List<Point> list = findBorderSeeds();
         for(Point p: list) {
             storedEnergyH[p.x][p.y] = DEFAULT_ENERGY;
         }
+    }
+
+    public final void recrystallize(RecrystallizationParams params) {
+
     }
 
     public void setBoundaryValue(int boundaryValue) {
