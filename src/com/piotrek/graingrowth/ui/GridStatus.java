@@ -25,6 +25,13 @@ class GridStatus {
         proceeded = false;
     }
 
+    GridStatus(Integer[][] states) {
+        this.states = states;
+        dim = new Dimension(states[0].length, states.length);
+        colorList = null;
+        proceeded = false;
+    }
+
     private int findMax() {
         Set<Integer> set = new HashSet<>();
         for(Integer[] tab: states) {

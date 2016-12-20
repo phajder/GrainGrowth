@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.piotrek.graingrowth.ui.MainFrame">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="638" height="400"/>
+      <xy x="20" y="20" width="660" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -100,57 +100,77 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="c0e14" binding="actionButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+          <grid id="c0e14" binding="actionButtonPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints border-constraint="South"/>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="1ad07" class="javax.swing.JButton" binding="returnButton">
-                <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <text value="Return"/>
-                </properties>
-              </component>
-              <component id="50313" class="javax.swing.JButton" binding="drawRandomButton">
-                <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <text value="Draw random"/>
-                </properties>
-              </component>
-              <component id="260ac" class="javax.swing.JButton" binding="drawInclusionsButton">
-                <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <text value="Draw inclusions"/>
-                </properties>
-              </component>
-              <component id="3a670" class="javax.swing.JButton" binding="processButton">
-                <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <text value="Process"/>
-                </properties>
-              </component>
-              <component id="def9b" class="javax.swing.JButton" binding="substructureButton">
-                <constraints/>
-                <properties>
-                  <text value="Substructure"/>
-                </properties>
-              </component>
-              <component id="63530" class="javax.swing.JButton" binding="dualPhaseButton">
-                <constraints/>
-                <properties>
-                  <text value="Dualphase"/>
-                </properties>
-              </component>
-              <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
-                <constraints/>
-                <properties>
-                  <text value="Reset" noi18n="true"/>
-                </properties>
-              </component>
+              <grid id="cb3dc" binding="dmrButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="North"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="1ad07" class="javax.swing.JButton" binding="returnButton">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <text value="Return"/>
+                    </properties>
+                  </component>
+                  <component id="50313" class="javax.swing.JButton" binding="drawRandomButton">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <text value="Draw random"/>
+                    </properties>
+                  </component>
+                  <component id="260ac" class="javax.swing.JButton" binding="drawInclusionsButton">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <text value="Draw inclusions"/>
+                    </properties>
+                  </component>
+                  <component id="3a670" class="javax.swing.JButton" binding="processButton">
+                    <constraints/>
+                    <properties>
+                      <enabled value="true"/>
+                      <text value="Process"/>
+                    </properties>
+                  </component>
+                  <component id="def9b" class="javax.swing.JButton" binding="substructureButton">
+                    <constraints/>
+                    <properties>
+                      <text value="Substructure"/>
+                    </properties>
+                  </component>
+                  <component id="63530" class="javax.swing.JButton" binding="dualPhaseButton">
+                    <constraints/>
+                    <properties>
+                      <text value="Dualphase"/>
+                    </properties>
+                  </component>
+                  <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
+                    <constraints/>
+                    <properties>
+                      <text value="Reset" noi18n="true"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="d10e9" binding="recrystalizationButtonPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="South"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="d4a80" class="javax.swing.JButton" binding="showEnergyButton">
+                    <constraints/>
+                    <properties>
+                      <text value="Energy distribution"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
           <grid id="eecf9" binding="createButtonPanel" layout-manager="GridBagLayout">

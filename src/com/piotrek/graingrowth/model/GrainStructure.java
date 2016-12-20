@@ -12,11 +12,13 @@ import java.util.*;
  */
 public abstract class GrainStructure {
     private static final int INCLUSION_VALUE = -1;
+    private static final int DEFAULT_ENERGY = 1;
 
     protected int boundaryValue;
     protected boolean periodical;
 
     protected Integer[][] states;
+    private Integer[][] storedEnergyH;
 
     protected GrainStructure(boolean periodical) {
         this.periodical = periodical;
@@ -45,6 +47,15 @@ public abstract class GrainStructure {
                     if(i*i + j*j > radius) continue;
                 if(periodical || (x+i >= 0 && y+j >= 0 && x+i < states.length && y+j < states[0].length))
                     states[modulo(x+i,states.length)][modulo(y+j,states[0].length)] = INCLUSION_VALUE;
+            }
+        }
+    }
+
+    private void initializeEnergy() {
+        storedEnergyH = new Integer[states.length][states[0].length];
+        for(int i=0; i<storedEnergyH.length; i++) {
+            for(Integer[] tab: storedEnergyH) {
+                Arrays.fill(tab, 0);
             }
         }
     }
@@ -102,6 +113,11 @@ public abstract class GrainStructure {
         return result;
     }
 
+    /**
+     * Drawing inclusions before simulation.
+     * @param type Type of inclusion - circular or square
+     * @param radius
+     */
     public final void drawInclusionBefore(InclusionType type, int radius) {
         Random random = new Random();
         int x = random.nextInt(states.length), y = random.nextInt(states[0].length);
@@ -109,6 +125,11 @@ public abstract class GrainStructure {
         drawInclusions(type, radius, x, y);
     }
 
+    /**
+     * Drawing inclusions after simulation. They are placed on grain boundaries.
+     * @param type Type of inclusion - circular or square
+     * @param radius Radius of inclusion
+     */
     public final void drawInclusionsAfter(InclusionType type, int radius) {
         List<Point> borderSeeds = findBorderSeeds();
         Random random = new Random();
@@ -117,11 +138,38 @@ public abstract class GrainStructure {
         drawInclusions(type, radius, borderSeeds.get(val).x, borderSeeds.get(val).y);
     }
 
+    /**
+     * Distributes energy in material homogeneously.
+     */
+    public final void distributeHomogeneous() {
+        if(storedEnergyH == null) initializeEnergy();
+        for(int i=0; i<storedEnergyH.length; i++) {
+            for(int j=0; j<storedEnergyH[i].length; j++) {
+                storedEnergyH[i][j] = DEFAULT_ENERGY;
+            }
+        }
+    }
+
+    /**
+     * Distributes energy in material only on grain boundaries.
+     */
+    public final void distributeOnGrainBoundaries() {
+        if(storedEnergyH == null) initializeEnergy();
+        List<Point> list = findBorderSeeds();
+        for(Point p: list) {
+            storedEnergyH[p.x][p.y] = DEFAULT_ENERGY;
+        }
+    }
+
     public void setBoundaryValue(int boundaryValue) {
         this.boundaryValue = boundaryValue;
     }
 
     protected void setDefaultBoundaryValue() {
         boundaryValue = INCLUSION_VALUE;
+    }
+
+    public Integer[][] getStoredEnergyH() {
+        return storedEnergyH;
     }
 }

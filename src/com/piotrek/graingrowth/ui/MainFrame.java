@@ -11,6 +11,8 @@ import com.piotrek.graingrowth.type.MethodType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -50,6 +52,9 @@ public class MainFrame extends JFrame {
     private JButton createMcButton;
     private JPanel createButtonPanel;
     private JSpinner maxIterSpinner;
+    private JPanel dmrButtonPanel;
+    private JPanel recrystalizationButtonPanel;
+    private JButton showEnergyButton;
     //=====END OF GUI ELEMENTS=====//
 
     private class ProcessWorker extends SwingWorker {
@@ -80,6 +85,8 @@ public class MainFrame extends JFrame {
         substructureButton.addActionListener(e -> generateNewStructure(grainList.size(), 0));
         dualPhaseButton.addActionListener(e -> generateNewStructure(1, 1));
         resetButton.addActionListener(e -> resetGrainGrowth());
+
+        showEnergyButton.addActionListener(e -> showEnergyButtonActionPerformed());
 
         processPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -255,5 +262,12 @@ public class MainFrame extends JFrame {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Input value is not a number.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void showEnergyButtonActionPerformed() {
+        structure.distributeOnGrainBoundaries();
+        EnergyVisualisation visualisation = new EnergyVisualisation(structure.getStoredEnergyH());
+        visualisation.setVisible(true);
+        visualisation.visualiseEnergy();
     }
 }
