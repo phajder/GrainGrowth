@@ -65,7 +65,7 @@ public class MainFrame extends JFrame {
      */
     private boolean setup;
 
-    //=====GUI elements=====//
+//============================= GUI elements =============================//
     private JPanel mainPanel;
     private JPanel optionPanel;
     private JPanel processPanel;
@@ -93,7 +93,7 @@ public class MainFrame extends JFrame {
     private JComboBox nucleationPlacementComboBox;
     private JComboBox nucleationTypeComboBox;
     private JButton recrystallizationButton;
-    //=====END OF GUI ELEMENTS=====//
+//========================= END OF GUI ELEMENTS =========================//
 
     private class ProcessWorker extends SwingWorker {
         private String simulationType;
