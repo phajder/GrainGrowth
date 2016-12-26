@@ -16,7 +16,6 @@ Implemented neighbourhoods for Cellular Automata:
 <li>generating inclusions before and after grain growth,</li>
 <li>influence of grain curvature - Grain boundary shape control (4 rules),</li>
 <li>creating substructures and dual phase steel microstructures,</li>
-<li>generating substructures using Monte Carlo method.</li>
+<li>generating substructures using Monte Carlo method,</li>
+<li>static recrystallization using Monte Carlo.</li>
 </p>
-
-<p>To be continued...</p>

@@ -23,13 +23,46 @@ public class MainFrame extends JFrame {
     private static final String RECRYSTALLIZATION = "recrystallization";
 
     private static final int DEFAULT_SIZE = 250;
+
+    /**
+     * Object used for visual representation of generated microstructure.
+     */
     private GridStatus gridStatus;
+
+    /**
+     * DMR object.
+     */
     private GrainStructure structure;
+
+    /**
+     * Static recrystallization parameters.
+     */
     private RecrystallizationParams params;
+
+    /**
+     * Calculation space dimension.
+     */
     private Dimension caSize;
+
+    /**
+     * List of grains, selected to stay in substructure.
+     */
     private List<Integer> grainList;
+
+    /**
+     * Grain growth method, selected in main panel (by button).
+     */
     private MethodType basicMethod;
+
+    /**
+     * If false, dual phase or substructure is prepared.
+     * Otherwise microstructure generation is proceeded.
+     */
     private boolean selectedGrainsPainted;
+
+    /**
+     * Checks if recrystallization has been set.
+     */
     private boolean setup;
 
     //=====GUI elements=====//
@@ -40,7 +73,6 @@ public class MainFrame extends JFrame {
     private JComboBox<Object> boundaryComboBox;
     private JButton createCaButton;
     private JPanel cardPanel;
-    @SuppressWarnings("unused")
     private JPanel buttonPanel;
     private JButton returnButton;
     private JButton processButton;
@@ -54,9 +86,7 @@ public class MainFrame extends JFrame {
     private JButton createMcButton;
     private JPanel createButtonPanel;
     private JSpinner maxIterSpinner;
-    @SuppressWarnings("unused")
     private JPanel dmrButtonPanel;
-    @SuppressWarnings("unused")
     private JPanel recrystallizationButtonPanel;
     private JButton showEnergyButton;
     private JComboBox energyComboBox;
@@ -330,6 +360,11 @@ public class MainFrame extends JFrame {
         worker.execute();
     }
 
+    private void recrystallizationButtonActionPerformed() {
+        ProcessWorker worker = new ProcessWorker(RECRYSTALLIZATION);
+        worker.execute();
+    }
+
     private void processPanelBeforeGrowthMouseClicked(int x, int y) {
         gridStatus.addSeed(new Point(x, y));
         processPanel.repaint();
@@ -376,10 +411,5 @@ public class MainFrame extends JFrame {
         EnergyVisualisation visualisation = new EnergyVisualisation(structure.getStoredEnergyH());
         visualisation.setVisible(true);
         visualisation.visualiseEnergy();
-    }
-
-    private void recrystallizationButtonActionPerformed() {
-        ProcessWorker worker = new ProcessWorker(RECRYSTALLIZATION);
-        worker.execute();
     }
 }

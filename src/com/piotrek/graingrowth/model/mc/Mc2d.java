@@ -55,7 +55,7 @@ public abstract class Mc2d extends GrainStructure {
             double energyBefore = 0.0, energyAfter = 0.0;
             int x, y;
             int searchCriteria = recrystallizationMode ? 0 : boundaryValue;
-            do {
+            do { //drawing random cell
                 x = random.nextInt(states.length);
                 y = random.nextInt(states[0].length);
             } while (states[x][y] <= searchCriteria);
