@@ -101,7 +101,7 @@
         <border type="none"/>
         <children>
           <grid id="c0e14" binding="actionButtonPanel" layout-manager="GridBagLayout">
-            <constraints border-constraint="South"/>
+            <constraints border-constraint="Center"/>
             <properties/>
             <border type="none"/>
             <children>
@@ -231,10 +231,19 @@
                   <text value="Reset" noi18n="true"/>
                 </properties>
               </component>
+              <component id="2a440" class="javax.swing.JProgressBar" binding="simulationProgress">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag top="5" left="5" bottom="5" right="5" weightx="0.23" weighty="0.23"/>
+                </constraints>
+                <properties>
+                  <stringPainted value="true"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="eecf9" binding="createButtonPanel" layout-manager="GridBagLayout">
-            <constraints border-constraint="Center"/>
+            <constraints border-constraint="North"/>
             <properties/>
             <border type="none"/>
             <children>

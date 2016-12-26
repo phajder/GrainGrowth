@@ -93,6 +93,7 @@ public class MainFrame extends JFrame {
     private JComboBox nucleationPlacementComboBox;
     private JComboBox nucleationTypeComboBox;
     private JButton recrystallizationButton;
+    private JProgressBar simulationProgress;
 //========================= END OF GUI ELEMENTS =========================//
 
     private class ProcessWorker extends SwingWorker {
@@ -128,11 +129,14 @@ public class MainFrame extends JFrame {
             do {
                 structure.process();
                 processPanel.repaint();
+                processProgressBar();
             } while(structure.isNotEnd());
             processButton.setEnabled(true);
         }
 
         private void doRecrystallization() {
+            recrystallizationButton.setEnabled(false);
+
             if(!setup) {
                 structure = McFactory.getMc2dInstance(boundaryComboBox.getSelectedIndex() == 1,
                         gridStatus.getStates(),
@@ -151,14 +155,20 @@ public class MainFrame extends JFrame {
                 setup = true;
             }
 
-            recrystallizationButton.setEnabled(false);
             do {
                 structure.recrystallize(params);
                 gridStatus.generateRecrystallizationColors();
                 processPanel.repaint();
+                processProgressBar();
             } while(structure.isNotEnd());
 
             recrystallizationButton.setEnabled(true);
+        }
+
+        private void processProgressBar() {
+            int progress = structure.getProgress();
+            simulationProgress.setValue(progress);
+            simulationProgress.setString(progress + "%");
         }
     }
 
@@ -180,7 +190,7 @@ public class MainFrame extends JFrame {
         recrystallizationButton.addActionListener(e -> recrystallizationButtonActionPerformed());
         nucleationPlacementComboBox.addItemListener(e ->
                 params.setNucleationOnBoundaries(nucleationPlacementComboBox.getSelectedIndex() == 1));
-        nucleationTypeComboBox.addItemListener(e -> {
+        nucleationTypeComboBox.addActionListener(e -> {
             params.setNucleationType((NucleationType) nucleationTypeComboBox.getSelectedItem());
             if(nucleationTypeComboBox.getSelectedItem().equals(NucleationType.AT_START)) {
                 String val = JOptionPane.showInputDialog(this,

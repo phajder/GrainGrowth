@@ -87,6 +87,16 @@ public abstract class Ca2d extends GrainStructure {
     }
 
     @Override
+    public int getProgress() {
+        List<Integer> t = new ArrayList<>();
+        for(Integer[] tab: newStates) {
+            t.addAll(Arrays.asList(tab));
+        }
+        long val = t.stream().filter(x -> x == 0).count();
+        return Math.round(100.0f * (1.0f - ((float) val)/t.size()));
+    }
+
+    @Override
     protected void drawInclusions(InclusionType type, int radius, int x, int y) {
         super.drawInclusions(type, radius, x, y);
         for(int i=0; i<states.length; i++) {

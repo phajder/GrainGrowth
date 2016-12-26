@@ -112,6 +112,11 @@ public abstract class Mc2d extends GrainStructure {
         return true;
     }
 
+    @Override
+    public int getProgress() {
+        return Math.round(100.0f * currentIteration / maxIterations);
+    }
+
     public void setMaxIterations(int maxIterations) {
         if(maxIterations > 0) this.maxIterations = maxIterations;
         else this.maxIterations = MAX_ITERATIONS;

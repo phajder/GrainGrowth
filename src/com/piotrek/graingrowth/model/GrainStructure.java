@@ -40,6 +40,7 @@ public abstract class GrainStructure {
     public abstract void process();
     public abstract void drawGrains(int numOfGrains);
     public abstract boolean isNotEnd();
+    public abstract int getProgress();
 
     protected void drawInclusions(InclusionType type, int radius, int x, int y) {
         int value = type.equals(InclusionType.SQUARE) ?
