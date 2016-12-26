@@ -2,11 +2,12 @@ package com.piotrek.graingrowth.type;
 
 /**
  * Enum containing Monte Carlo neighbourhood types used on UI purpose.
- * Created by Piotrek on 29.11.2016.
- * @author Piotrek
+ * Created by Piotr on 29.11.2016.
+ * @author Piotr Hajder
  */
 public enum McNeighbourhood {
-    VON_NEUMANN("Von Neumann"), MOORE("Moore");
+    VON_NEUMANN("Von Neumann"),
+    MOORE("Moore");
 
     private String name;
 

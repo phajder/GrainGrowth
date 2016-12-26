@@ -2,8 +2,8 @@ package com.piotrek.graingrowth.model.ca;
 
 /**
  * Shape control rules for cellular automata method.
- * Created by Piotrek on 25.10.2016.
- * @author Piotrek
+ * Created by Piotr on 25.10.2016.
+ * @author Piotr Hajder
  */
 class ShapeControl extends Ca2d {
     private RulesImpl rules;

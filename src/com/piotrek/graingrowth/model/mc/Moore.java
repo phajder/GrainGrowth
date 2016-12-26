@@ -2,8 +2,8 @@ package com.piotrek.graingrowth.model.mc;
 
 /**
  * Moore neighbourhood for Monte Carlo grain growth.
- * Created by Piotrek on 29.11.2016.
- * @author Piotrek
+ * Created by Piotr on 29.11.2016.
+ * @author Piotr Hajder
  */
 class Moore extends Mc2d {
     private static final int[][] NEIGHBOURHOOD = {
@@ -12,7 +12,7 @@ class Moore extends Mc2d {
             {1, 1, 1}
     };
 
-    protected Moore(boolean periodical, Integer[][] states) {
+    Moore(boolean periodical, Integer[][] states) {
         super(periodical, states);
     }
 

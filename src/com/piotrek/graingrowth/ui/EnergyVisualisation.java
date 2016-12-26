@@ -5,15 +5,15 @@ import java.awt.*;
 
 /**
  * Energy visualisation form. Shows energy distribution before recrystallisation in material (after DMR).
- * Created by Piotrek on 11.12.2016.
- * @author Piotrek
+ * Created by Piotr on 11.12.2016.
+ * @author Piotr Hajder
  */
 class EnergyVisualisation extends JFrame {
     private JPanel energyPanel;
 
     EnergyVisualisation(Integer[][] states) {
         GridStatus gridStatus = new GridStatus(states);
-        gridStatus.generateColors();
+        gridStatus.generateRandomColors();
         energyPanel = new GridPanel(gridStatus);
         add(energyPanel);
     }

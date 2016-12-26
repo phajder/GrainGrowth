@@ -4,8 +4,8 @@ import com.piotrek.graingrowth.type.McNeighbourhood;
 
 /**
  * Util used for creating Mc2d objects.
- * Created by Piotrek on 29.11.2016.
- * @author Piotrek
+ * Created by Piotr on 29.11.2016.
+ * @author Piotr Hajder
  */
 public class McFactory {
     public static Mc2d getMc2dInstance(boolean periodical, Integer[][] states, McNeighbourhood neighbourhood) {

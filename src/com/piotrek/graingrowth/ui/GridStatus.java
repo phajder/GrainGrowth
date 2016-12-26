@@ -6,13 +6,14 @@ import java.util.List;
 
 /**
  * Used for grid panel implementation, containing important data for rendering.
- * Created by Piotrek on 18.10.2016.
- * @author Piotrek
+ * Created by Piotr on 18.10.2016.
+ * @author Piotr Hajder
  */
 class GridStatus {
+    private final Random random = new Random();
     private final Dimension dim;
-    private final Integer[][] states;
-    private ArrayList<Color> colorList;
+    private Integer[][] states;
+    private volatile List<Color> colorList;
     private boolean proceeded;
 
     GridStatus(Dimension dim) {
@@ -40,28 +41,54 @@ class GridStatus {
         return set.stream().max(Comparator.naturalOrder()).orElse(null);
     }
 
-    private void addColor() {
-        Random random = new Random();
-        colorList.add(new Color(random.nextInt(255),
-                random.nextInt(255),
-                random.nextInt(255))
+    /**
+     * Generates random color using RGB fractions. Which ones should be used is determined by parameters.
+     * @param r Determines if red fraction should be included.
+     * @param g Determines if green fraction should be included.
+     * @param b Determines if blue fraction should be included.
+     */
+    private void addColor(int r, int g, int b) {
+        colorList.add(new Color(
+                r*random.nextInt(255),
+                g*random.nextInt(255),
+                b*random.nextInt(255))
         );
+    }
+
+    /**
+     * Generates random color including all RGB fractions.
+     */
+    private void addColor() {
+        addColor(1,0,0);
     }
 
     private void removeAllColors() {
         if(colorList!= null) colorList.clear();
     }
 
-    void generateColors() {
+    private void generateColors(int r, int g, int b) {
         if(colorList == null) colorList = new ArrayList<>();
         for(int i=colorList.size(); i<findMax(); i++) {
-            addColor();
+            addColor(r,g,b);
         }
+    }
+
+    private void resetColors() {
+        removeAllColors();
+        generateColors(0,0,1);
+    }
+
+    void generateRandomColors() {
+        generateColors(0,1,0);
+    }
+
+    void generateRecrystallizationColors() {
+        generateColors(1, 0, 0);
     }
 
     void addSeed(Point p) {
         if(this.states[p.x][p.y] == 0) {
-            states[p.x][p.y] = this.findMax() + 1;
+            states[p.x][p.y] = findMax() + 1;
             addColor();
         }
     }
@@ -74,11 +101,6 @@ class GridStatus {
             }
         }
         proceeded = false;
-    }
-
-    private void resetColors() {
-        removeAllColors();
-        generateColors();
     }
 
     void createSubstructure(List<Integer> values) {
@@ -117,6 +139,10 @@ class GridStatus {
         resetColors();
     }
 
+    public void setStates(Integer[][] states) {
+        this.states = states;
+    }
+
     Dimension getDim() {
         return dim;
     }
@@ -129,7 +155,7 @@ class GridStatus {
         return states[x][y];
     }
 
-    ArrayList<Color> getColorList() {
+    List<Color> getColorList() {
         return colorList;
     }
 

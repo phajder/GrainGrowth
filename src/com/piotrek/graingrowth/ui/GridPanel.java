@@ -3,12 +3,12 @@ package com.piotrek.graingrowth.ui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Grid panel implementation.
- * Created by Piotrek on 18.10.2016.
- * @author Piotrek
+ * Created by Piotr on 18.10.2016.
+ * @author Piotr Hajder
  */
 class GridPanel extends JPanel {
     private final GridStatus gridStatus;
@@ -26,19 +26,23 @@ class GridPanel extends JPanel {
 
         int counter;
         Integer[][] tab = gridStatus.getStates();
-        ArrayList<Color> cl = gridStatus.getColorList();
+        List<Color> colorList = gridStatus.getColorList();
 
         for (int y = 0; y < gridStatus.getDim().height; y++) {
             for (int x = 0; x < gridStatus.getDim().width; x++) {
                 //set cell colour
                 if(tab != null) {
                     counter = tab[y][x];
+
                     if(counter == 0) { //empty space
                         g2d.setColor(Color.WHITE);
                     } else if(counter == -1) { //inclusions
                         g2d.setColor(Color.BLACK);
                     } else { //else
-                        g2d.setColor(cl.get(counter - 1));
+                        if(colorList != null) {
+                            if (counter > colorList.size()) continue;
+                            g2d.setColor(colorList.get(counter - 1));
+                        }
                     }
                 } else {
                     g2d.setColor(Color.WHITE);

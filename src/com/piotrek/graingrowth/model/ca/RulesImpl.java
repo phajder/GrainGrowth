@@ -4,8 +4,8 @@ import java.util.*;
 
 /**
  * Shape control rules implementation.
- * Created by Piotrek on 25.10.2016.
- * @author Piotrek
+ * Created by Piotr on 25.10.2016.
+ * @author Piotr Hajder
  */
 class RulesImpl {
     static final int DEFAULT_PROBABILITY = 10;

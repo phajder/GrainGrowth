@@ -2,8 +2,8 @@ package com.piotrek.graingrowth.model.ca;
 
 /**
  * Von Neumann neighbourhood for cellular automata method.
- * Created by Piotrek on 18.10.2016.
- * @author Piotrek
+ * Created by Piotr on 18.10.2016.
+ * @author Piotr Hajder
  */
 class VonNeumann extends Ca2d {
     private static final int[][] neighClose = {

@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Basic model for grain growth algorithms.
- * Created by Piotrek on 29.11.2016.
+ * Created by Piotr on 29.11.2016.
  * @author Piotrek
  */
 public abstract class GrainStructure {
@@ -17,15 +17,18 @@ public abstract class GrainStructure {
     protected int boundaryValue;
     protected boolean periodical;
 
+    protected boolean recrystallizationMode = false;
+    private List<Point> recrystallizationBorderSeeds;
+
     protected Integer[][] states;
-    private Integer[][] storedEnergyH;
+    protected Integer[][] storedEnergyH;
 
     protected GrainStructure(boolean periodical) {
         this.periodical = periodical;
-        boundaryValue = INCLUSION_VALUE + 1;
+        setDefaultBoundaryValue();
     }
 
-    protected static int modulo(int n, int p) {
+    private static int modulo(int n, int p) {
         int tmp = n%p;
         if(tmp < 0)
             tmp += p;
@@ -89,6 +92,14 @@ public abstract class GrainStructure {
         return result;
     }
 
+    private int findMax() {
+        Set<Integer> set = new HashSet<>();
+        for(Integer[] t: states) {
+            set.addAll(Arrays.asList(t));
+        }
+        return set.stream().max(Comparator.naturalOrder()).orElse(null);
+    }
+
     protected Integer[][] getNeighbours(int x, int y, int[][] neighbourhood) {
         Integer[][] result = new Integer[3][3];
 
@@ -102,7 +113,7 @@ public abstract class GrainStructure {
                 if(periodical || (x+i >= 0 && y+j >= 0 && x+i < states.length && y+j < states[0].length)) {
                     int val = states[modulo(x+i, states.length)][modulo(y+j, states[0].length)];
                     if(val > boundaryValue) {
-                        result[1 + i][1 + j] = neighbourhood[1 + i][1 + j] * states[modulo(x + i, states.length)][modulo(y + j, states[0].length)];
+                        result[1 + i][1 + j] = neighbourhood[1 + i][1 + j] * val;
                         continue;
                     }
                 }
@@ -116,7 +127,7 @@ public abstract class GrainStructure {
     /**
      * Drawing inclusions before simulation.
      * @param type Type of inclusion - circular or square
-     * @param radius
+     * @param radius Radius length
      */
     public final void drawInclusionBefore(InclusionType type, int radius) {
         Random random = new Random();
@@ -161,16 +172,37 @@ public abstract class GrainStructure {
         }
     }
 
-    public final void recrystallize(RecrystallizationParams params) {
+    public final void reset() {
+        recrystallizationMode = false;
+        recrystallizationBorderSeeds = null;
+        initializeEnergy();
+        setDefaultBoundaryValue();
+    }
 
+    public void recrystallizationSetup() {
+        recrystallizationMode = true;
+        recrystallizationBorderSeeds = findBorderSeeds();
+        boundaryValue = findMax();
+    }
+
+    public void recrystallize(RecrystallizationParams params) {
+        int seedIter = 1, max = findMax();
+
+        List<Point> generatedSeeds = params.isNucleationOnBoundaries() ?
+                params.generateNucleons(recrystallizationBorderSeeds) :
+                params.generateNucleons(states.length, states[0].length);
+        for(Point p: generatedSeeds) {
+            states[p.x][p.y] = max + seedIter++;
+        }
+        process();
     }
 
     public void setBoundaryValue(int boundaryValue) {
         this.boundaryValue = boundaryValue;
     }
 
-    protected void setDefaultBoundaryValue() {
-        boundaryValue = INCLUSION_VALUE;
+    private void setDefaultBoundaryValue() {
+        boundaryValue = INCLUSION_VALUE + 1;
     }
 
     public Integer[][] getStoredEnergyH() {

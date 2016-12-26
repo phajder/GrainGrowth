@@ -10,8 +10,8 @@ import static java.lang.System.arraycopy;
 
 /**
  * Cellular Automata method implementation.
- * Created by Piotrek on 18.10.2016.
- * @author Piotrek
+ * Created by Piotr on 18.10.2016.
+ * @author Piotr Hajder
  */
 public abstract class Ca2d extends GrainStructure {
     private Integer[][] newStates;
@@ -76,14 +76,13 @@ public abstract class Ca2d extends GrainStructure {
     }
 
     @Override
-    public final boolean isNotEnd() {
+    public boolean isNotEnd() {
         for(int i=0; i<newStates.length; i++) {
             for(int j=0; j<newStates[0].length; j++) {
                 if(!Objects.equals(newStates[i][j], states[i][j]))
                     return true;
             }
         }
-        setDefaultBoundaryValue();
         return false;
     }
 

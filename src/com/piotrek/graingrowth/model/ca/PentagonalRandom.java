@@ -5,8 +5,8 @@ import java.util.List;
 
 /**
  * Pentagonal random neighbourhood for cellular automata.
- * Created by Piotrek on 18.10.2016.
- * @author Piotrek
+ * Created by Piotr on 18.10.2016.
+ * @author Piotr Hajder
  */
 class PentagonalRandom extends Ca2d {
     private static List<int[][]> neighCases = init();

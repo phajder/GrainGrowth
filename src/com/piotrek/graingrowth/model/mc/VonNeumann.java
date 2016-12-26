@@ -2,8 +2,8 @@ package com.piotrek.graingrowth.model.mc;
 
 /**
  * Von Neumann neighbourhood for Monte Carlo method.
- * Created by Piotrek on 29.11.2016.
- * @author Piotrek
+ * Created by Piotr on 29.11.2016.
+ * @author Piotr Hajder
  */
 class VonNeumann extends Mc2d {
     private static final int[][] NEIGHBOURHOOD = {

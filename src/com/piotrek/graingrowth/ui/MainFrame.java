@@ -15,17 +15,22 @@ import java.util.List;
 
 /**
  * User interface implementation using Swing.
- * Created by Piotrek on 18.10.2016.
- * @author Piotrek
+ * Created by Piotr on 18.10.2016.
+ * @author Piotr Hajder
  */
 public class MainFrame extends JFrame {
+    private static final String GRAIN_GROWTH = "grain_growth";
+    private static final String RECRYSTALLIZATION = "recrystallization";
+
     private static final int DEFAULT_SIZE = 250;
     private GridStatus gridStatus;
     private GrainStructure structure;
     private RecrystallizationParams params;
     private Dimension caSize;
     private List<Integer> grainList;
+    private MethodType basicMethod;
     private boolean selectedGrainsPainted;
+    private boolean setup;
 
     //=====GUI elements=====//
     private JPanel mainPanel;
@@ -35,6 +40,7 @@ public class MainFrame extends JFrame {
     private JComboBox<Object> boundaryComboBox;
     private JButton createCaButton;
     private JPanel cardPanel;
+    @SuppressWarnings("unused")
     private JPanel buttonPanel;
     private JButton returnButton;
     private JButton processButton;
@@ -48,8 +54,10 @@ public class MainFrame extends JFrame {
     private JButton createMcButton;
     private JPanel createButtonPanel;
     private JSpinner maxIterSpinner;
+    @SuppressWarnings("unused")
     private JPanel dmrButtonPanel;
-    private JPanel recrystalizationButtonPanel;
+    @SuppressWarnings("unused")
+    private JPanel recrystallizationButtonPanel;
     private JButton showEnergyButton;
     private JComboBox energyComboBox;
     private JComboBox nucleationPlacementComboBox;
@@ -58,9 +66,33 @@ public class MainFrame extends JFrame {
     //=====END OF GUI ELEMENTS=====//
 
     private class ProcessWorker extends SwingWorker {
+        private String simulationType;
+
+        ProcessWorker(String simulationType) {
+            super();
+            this.simulationType = simulationType;
+        }
 
         @Override
         protected Object doInBackground() throws Exception {
+            switch (simulationType) {
+                case GRAIN_GROWTH:
+                    doGrainGrowth();
+                    break;
+                case RECRYSTALLIZATION:
+                    doRecrystallization();
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(MainFrame.this,
+                            "Program internal error.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    break;
+            }
+            return null;
+        }
+
+        private void doGrainGrowth() {
             processButton.setEnabled(false);
             gridStatus.proceed();
             do {
@@ -68,7 +100,35 @@ public class MainFrame extends JFrame {
                 processPanel.repaint();
             } while(structure.isNotEnd());
             processButton.setEnabled(true);
-            return null;
+        }
+
+        private void doRecrystallization() {
+            if(!setup) {
+                structure = McFactory.getMc2dInstance(boundaryComboBox.getSelectedIndex() == 1,
+                        gridStatus.getStates(),
+                        (McNeighbourhood) mcNeighbourhoodComboBox.getSelectedItem());
+                ((Mc2d)structure).setMaxIterations((int) maxIterSpinner.getValue());
+
+                if(energyComboBox.getSelectedIndex() == 0) {
+                    structure.distributeHomogeneous();
+                } else {
+                    structure.distributeOnGrainBoundaries();
+                }
+
+                structure.recrystallizationSetup();
+                params.setup();
+
+                setup = true;
+            }
+
+            recrystallizationButton.setEnabled(false);
+            do {
+                structure.recrystallize(params);
+                gridStatus.generateRecrystallizationColors();
+                processPanel.repaint();
+            } while(structure.isNotEnd());
+
+            recrystallizationButton.setEnabled(true);
         }
     }
 
@@ -88,14 +148,25 @@ public class MainFrame extends JFrame {
 
         showEnergyButton.addActionListener(e -> showEnergyButtonActionPerformed());
         recrystallizationButton.addActionListener(e -> recrystallizationButtonActionPerformed());
-        energyComboBox.addItemListener(e -> {
-            params.setEnergyOnBoundaries(energyComboBox.getSelectedIndex() == 1);
-        });
-        nucleationPlacementComboBox.addItemListener(e -> {
-            params.setNucleationOnBoundaries(nucleationPlacementComboBox.getSelectedIndex() == 1);
-        });
+        nucleationPlacementComboBox.addItemListener(e ->
+                params.setNucleationOnBoundaries(nucleationPlacementComboBox.getSelectedIndex() == 1));
         nucleationTypeComboBox.addItemListener(e -> {
             params.setNucleationType((NucleationType) nucleationTypeComboBox.getSelectedItem());
+            if(nucleationTypeComboBox.getSelectedItem().equals(NucleationType.AT_START)) {
+                String val = JOptionPane.showInputDialog(this,
+                        "Select number of nucleons to generate at the beginning.",
+                        "Maximum nucleons to generate",
+                        JOptionPane.QUESTION_MESSAGE);
+                try {
+                    int parsed = Integer.valueOf(val);
+                    params.setMaxNucleons(parsed);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this,
+                            "Wrong number format. Assuming default value.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
 
         processPanel.addMouseListener(new MouseAdapter() {
@@ -116,6 +187,7 @@ public class MainFrame extends JFrame {
         grainList = new ArrayList<>();
         actionButtonPanel.setVisible(false);
         selectedGrainsPainted = false;
+        setup = false;
         params = new RecrystallizationParams();
         add(mainPanel);
     }
@@ -157,7 +229,22 @@ public class MainFrame extends JFrame {
     }
 
     private void resetGrainGrowth() {
+        if(basicMethod != null) {
+            if(basicMethod.equals(MethodType.CA)) {
+                structure = CaFactory.getCa2dInstance(
+                        boundaryComboBox.getSelectedIndex() == 1,
+                        gridStatus.getStates(),
+                        (CaNeighbourhood) caNeighbourhoodComboBox.getSelectedItem());
+            } else if(basicMethod.equals(MethodType.MC)) {
+                structure = McFactory.getMc2dInstance(
+                        boundaryComboBox.getSelectedIndex() == 1,
+                        gridStatus.getStates(),
+                        (McNeighbourhood) mcNeighbourhoodComboBox.getSelectedItem());
+            }
+        }
         selectedGrainsPainted = false;
+        setup = false;
+        structure.reset();
         gridStatus.reset();
         grainList.clear();
         processPanel.repaint();
@@ -212,6 +299,7 @@ public class MainFrame extends JFrame {
 
         actionButtonPanel.setVisible(true);
         createButtonPanel.setVisible(false);
+        basicMethod = MethodType.CA;
     }
 
     private void createMcButtonActionPerformed() {
@@ -224,6 +312,7 @@ public class MainFrame extends JFrame {
 
         actionButtonPanel.setVisible(true);
         createButtonPanel.setVisible(false);
+        basicMethod = MethodType.MC;
     }
 
     private void returnButtonActionPerformed() {
@@ -237,7 +326,7 @@ public class MainFrame extends JFrame {
     }
 
     private void processButtonActionPerformed() {
-        ProcessWorker worker = new ProcessWorker();
+        ProcessWorker worker = new ProcessWorker(GRAIN_GROWTH);
         worker.execute();
     }
 
@@ -256,7 +345,7 @@ public class MainFrame extends JFrame {
         try {
             String val = JOptionPane.showInputDialog(this, "Input number of grains to be drawn:", "Input", JOptionPane.QUESTION_MESSAGE);
             structure.drawGrains(Integer.valueOf(val));
-            gridStatus.generateColors();
+            gridStatus.generateRandomColors();
             processPanel.repaint();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid number format.", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -290,11 +379,7 @@ public class MainFrame extends JFrame {
     }
 
     private void recrystallizationButtonActionPerformed() {
-        /*RecrystallizationParams params = new RecrystallizationParams(
-                energyComboBox.getSelectedIndex() == 1,
-                nucleationPlacementComboBox.getSelectedIndex() == 1,
-                (NucleationType) nucleationTypeComboBox.getSelectedItem()
-        );*/
-        structure.recrystallize(params);
+        ProcessWorker worker = new ProcessWorker(RECRYSTALLIZATION);
+        worker.execute();
     }
 }

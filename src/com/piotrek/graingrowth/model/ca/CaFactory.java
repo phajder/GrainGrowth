@@ -5,9 +5,9 @@ import com.piotrek.graingrowth.type.CaNeighbourhood;
 import javax.swing.*;
 
 /**
- * Factory used for creating graingrowth object.
- * Created by Piotrek on 18.10.2016.
- * @author Piotrek
+ * Factory used for creating grain growth object.
+ * Created by Piotr on 18.10.2016.
+ * @author Piotr Hajder
  */
 public class CaFactory {
     public static Ca2d getCa2dInstance(boolean periodic, Integer[][] states, CaNeighbourhood type) {

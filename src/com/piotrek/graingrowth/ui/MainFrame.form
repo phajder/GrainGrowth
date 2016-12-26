@@ -105,15 +105,6 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
-                <constraints>
-                  <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                  <gridbag top="5" left="5" bottom="5" right="5" weightx="0.23" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value="Reset" noi18n="true"/>
-                </properties>
-              </component>
               <component id="1ad07" class="javax.swing.JButton" binding="returnButton">
                 <constraints>
                   <grid row="0" column="3" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -124,7 +115,7 @@
                   <text value="Return"/>
                 </properties>
               </component>
-              <grid id="d10e9" binding="recrystalizationButtonPanel" layout-manager="GridBagLayout">
+              <grid id="d10e9" binding="recrystallizationButtonPanel" layout-manager="GridBagLayout">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
@@ -231,6 +222,15 @@
                   </component>
                 </children>
               </grid>
+              <component id="2ef68" class="javax.swing.JButton" binding="resetButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag top="5" left="5" bottom="5" right="5" weightx="0.23" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Reset" noi18n="true"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="eecf9" binding="createButtonPanel" layout-manager="GridBagLayout">
