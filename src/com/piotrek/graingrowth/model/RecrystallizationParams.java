@@ -22,7 +22,7 @@ public class RecrystallizationParams {
     private NucleationType nucleationType;
 
     private int maxNucleons = DEFAULT_NUCLEONS;
-    private int interval = 10;
+    private int interval = 1;
     private int currentIter = 0;
 
     public RecrystallizationParams() {

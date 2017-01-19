@@ -12,7 +12,7 @@ import java.util.List;
  */
 public abstract class Mc2d extends GrainStructure {
     private static final int MAX_ITERATIONS = 700;
-    private static final int Q = 50;
+    private static final int Q = 500;
     private int maxIterations;
     private int currentIteration;
 
@@ -32,7 +32,7 @@ public abstract class Mc2d extends GrainStructure {
 
     protected abstract double probability(double dE);
 
-    private List<Integer> findNewCellIds(Integer[][] neighbours) {
+    private Integer findNewCellIds(Integer[][] neighbours) {
         List<Integer> list = new ArrayList<>();
         for (Integer[] neighbour : neighbours) {
             for (Integer val : neighbour) {
@@ -40,11 +40,8 @@ public abstract class Mc2d extends GrainStructure {
                     list.add(val);
             }
         }
-
-        if(recrystallizationMode) {
-            return list;
-        }
-        return Collections.singletonList(list.get(random.nextInt(list.size())));
+        return list.isEmpty() ? null :
+                list.get(random.nextInt(list.size()));
     }
 
     @Override
@@ -61,30 +58,30 @@ public abstract class Mc2d extends GrainStructure {
             } while (states[x][y] <= searchCriteria);
 
             int cellId = states[x][y];
-            if(cellId <= boundaryValue || !recrystallizationMode) { //New grain grains cannot overlap themselves
-                Integer[][] neighbours = getNeighbours(x, y);
-                List<Integer> newCellIds = findNewCellIds(neighbours);
 
-                for (Integer newCellId : newCellIds) {
-                    for (int i = -1; i < 2; i++) {
-                        for (int j = -1; j < 2; j++) {
-                            if (i == 0 && j == 0) continue;
-                            energyBefore += 1 - kronecker(cellId, neighbours[1 + i][1 + j]);
-                            energyAfter += 1 - kronecker(newCellId, neighbours[1 + i][1 + j]);
-                        }
-                    }
-                    if (recrystallizationMode) {
-                        energyBefore += storedEnergyH[x][y];
-                    }
+            Integer[][] neighbours = getNeighbours(x, y);
+            Integer newCellId = findNewCellIds(neighbours);
+            if(newCellId == null) continue;
 
-                    double probability = probability(Jgb * (energyAfter - energyBefore));
-                    if (probability == 1) {
-                        states[x][y] = newCellId;
-                    } else {
-                        if (Math.random() < probability) {
-                            states[x][y] = newCellId;
-                        }
-                    }
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    if (i == 0 && j == 0) continue;
+                    energyBefore += 1 - kronecker(cellId, neighbours[1 + i][1 + j]);
+                    energyAfter += 1 - kronecker(newCellId, neighbours[1 + i][1 + j]);
+                }
+            }
+            if (recrystallizationMode) {
+                energyBefore += storedEnergyH[x][y];
+            }
+
+            double probability = probability(Jgb * (energyAfter - energyBefore));
+            if (probability == 1) {
+                states[x][y] = newCellId;
+                if(recrystallizationMode) storedEnergyH[x][y] = 0;
+            } else {
+                if (Math.random() < probability) {
+                    states[x][y] = newCellId;
+                    if(recrystallizationMode) storedEnergyH[x][y] = 0;
                 }
             }
         }
