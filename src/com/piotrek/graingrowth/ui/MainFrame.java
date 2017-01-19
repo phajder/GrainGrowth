@@ -61,6 +61,11 @@ public class MainFrame extends JFrame {
     private boolean selectedGrainsPainted;
 
     /**
+     * If true, energy should be initialized and generated with selected style.
+     */
+    private boolean energyDistributed;
+
+    /**
      * Checks if recrystallization has been set.
      */
     private boolean setup;
@@ -94,6 +99,7 @@ public class MainFrame extends JFrame {
     private JComboBox nucleationTypeComboBox;
     private JButton recrystallizationButton;
     private JProgressBar simulationProgress;
+    private JButton paramsButton;
 //========================= END OF GUI ELEMENTS =========================//
 
     private class ProcessWorker extends SwingWorker {
@@ -192,20 +198,18 @@ public class MainFrame extends JFrame {
                 params.setNucleationOnBoundaries(nucleationPlacementComboBox.getSelectedIndex() == 1));
         nucleationTypeComboBox.addActionListener(e -> {
             params.setNucleationType((NucleationType) nucleationTypeComboBox.getSelectedItem());
-            if(nucleationTypeComboBox.getSelectedItem().equals(NucleationType.AT_START)) {
-                String val = JOptionPane.showInputDialog(this,
-                        "Select number of nucleons to generate at the beginning.",
-                        "Maximum nucleons to generate",
-                        JOptionPane.QUESTION_MESSAGE);
-                try {
-                    int parsed = Integer.valueOf(val);
-                    params.setMaxNucleons(parsed);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this,
-                            "Wrong number format. Assuming default value.",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+            String val = JOptionPane.showInputDialog(this,
+                    "Select maximum number of nucleons to generate.",
+                    "Maximum nucleons to generate",
+                    JOptionPane.QUESTION_MESSAGE);
+            try {
+                int parsed = Integer.valueOf(val);
+                params.setMaxNucleons(parsed);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Wrong number format. Assuming default value.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -224,9 +228,32 @@ public class MainFrame extends JFrame {
             }
         });
 
+        paramsButton.addActionListener(e -> {
+            String iterBreak = JOptionPane.showInputDialog(this,
+                    "Select in which every iteration nucleons should be generated",
+                    "Question",
+                    JOptionPane.QUESTION_MESSAGE);
+            String interval = JOptionPane.showInputDialog(this,
+                    "Select how many nucleons should be generated in each step",
+                    "Question",
+                    JOptionPane.QUESTION_MESSAGE);
+
+            try {
+                params.setIterBreak(Integer.valueOf(iterBreak));
+                params.setInterval(Integer.valueOf(interval));
+            } catch (NumberFormatException e1) {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid input values. Assuming default values.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                params.setDefaultValues();
+            }
+        });
+
         grainList = new ArrayList<>();
         actionButtonPanel.setVisible(false);
         selectedGrainsPainted = false;
+        energyDistributed = false;
         setup = false;
         params = new RecrystallizationParams();
         add(mainPanel);
@@ -283,6 +310,7 @@ public class MainFrame extends JFrame {
             }
         }
         selectedGrainsPainted = false;
+        energyDistributed = false;
         setup = false;
         structure.reset();
         gridStatus.reset();
@@ -413,10 +441,13 @@ public class MainFrame extends JFrame {
     }
 
     private void showEnergyButtonActionPerformed() {
-        if(energyComboBox.getSelectedIndex() == 0) {
-            structure.distributeHomogeneous();
-        } else {
-            structure.distributeOnGrainBoundaries();
+        if(!energyDistributed) {
+            if (energyComboBox.getSelectedIndex() == 0) {
+                structure.distributeHomogeneous();
+            } else {
+                structure.distributeOnGrainBoundaries();
+            }
+            energyDistributed = true;
         }
         EnergyVisualisation visualisation = new EnergyVisualisation(structure.getStoredEnergyH());
         visualisation.setVisible(true);
